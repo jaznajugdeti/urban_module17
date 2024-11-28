@@ -21,7 +21,7 @@ async def all_users(db: Annotated[Session, Depends(get_db)]:
 # get '/user_id' с функцией user_by_id.
 @router.get('/user_id')
 async def user_by_id(db: Annotated[Session, Depends(get_db)], user_id: int):
-    users = db.scalars(select(User).where(User.id == user_id))
+    users = db.scalar(select(User).where(User.id == user_id))
     for user in users:
         if user is not None:
             return user
@@ -42,7 +42,7 @@ async def create_user(db: Annotated[Session, Depends(get_db)], create_user_model
 @router.put('/update')
 async def update_user(db: Annotated[Session, Depends(get_db)], user_id: int,
                       update_user_model: UpdateUser):
-    users = db.scalars(select(User).where(User.id == user_id))
+    users = db.scalar(select(User).where(User.id == user_id))
     for user in users:
         if user is not None:
             db.execute(insert(User).values(
@@ -60,7 +60,7 @@ async def update_user(db: Annotated[Session, Depends(get_db)], user_id: int,
 # delete '/delete' с функцией delete_user.
 @router.delete('/delete')
 async def delete_user(db: Annotated[Session, Depends(get_db)], user_id: int):
-    users = db.scalars(select(User).where(User.id == user_id))
+    users = db.scalar(select(User).where(User.id == user_id))
     for user in users:
         if user is not None:
             db.execute(delete(User).where(User.id == user_id))
